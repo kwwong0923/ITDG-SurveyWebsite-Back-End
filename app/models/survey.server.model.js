@@ -3,13 +3,7 @@ const Schema = mongoose.Schema;
 
 const SurveySchema = new Schema
 (
-    {
-        surveyId: 
-        {
-            type: String,
-            default: "",
-            trim: true,
-        },
+    {        
         topic: 
         {
             type: String,
