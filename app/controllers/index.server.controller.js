@@ -4,6 +4,10 @@ const Answer = require("../models/answer.server.model");
 // GET - get all the surveys
 module.exports.apiGetSurveys = async function(req, res)
 {
+    // test------------
+    console.log(req.body.user);
+    console.log(req.isAuthenticated());
+    //------------------
     try
     {
         let foundSurveys = await Survey.find({});
@@ -28,13 +32,29 @@ module.exports.apiGetSurveys = async function(req, res)
 // POST - Create a new survey
 module.exports.apiPostSurvey = async function(req, res)
 {
-    let{topic, description, active, answered, questions} = req.body;
+    // try
+    // {
+    //     let newSurvey = new Survey(
+    //         {
+    //             topic: req.body.topic,
+    //             description: req.body.description,
+    //             questions: req.body.questions,
+    //         }
+    //     );
+    //     console.log(newSurvey);
+    // }
+    // catch(error)
+    // {
+        
+    // }
+    console.log("apiPostSurvey")
+    let{topic, description, active, answered, questions, surveyId} = req.body;
     // console.log(surveyId, topic, description, active, answered, questions);
     try
     {
         let newSurvey = new Survey(
             {
-                topic, description, active, answered, questions
+                topic, description, active, answered, questions, surveyId
             }
         );
         let data = await Survey.findOne({topic});
@@ -67,16 +87,16 @@ module.exports.apiPostSurvey = async function(req, res)
 // DELETE - delete a survey
 module.exports.apiDeleteSurvey = async function(req, res)
 {
-    let {_id} = req.params;
+    let {surveyId} = req.params;
     try
     {
-        let deletedSurvey = await Survey.findOneAndDelete({_id});
+        let deletedSurvey = await Survey.findOneAndDelete({surveyId});
         if(deletedSurvey)
         {
             console.log("SUCCESSFUL DELETING SURVEY")
             return res.send(
                 {
-                    msg: `SUCCESSFUL DELETING SURVEY, ID:${_id}`,
+                    msg: `SUCCESSFUL DELETING SURVEY, ID:${surveyId}`,
                     deletedObject: deletedSurvey
                 }
             )
@@ -84,7 +104,7 @@ module.exports.apiDeleteSurvey = async function(req, res)
         }
         else
         {
-            console.log(`ERROR DELETING SURVEY, ID: ${_id}`);
+            console.log(`ERROR DELETING SURVEY, ID: ${surveyId}`);
             return res.status(500).send("ERROR - BACKEND DELETE SURVEY ERROR");
         }
     }
@@ -99,12 +119,12 @@ module.exports.apiDeleteSurvey = async function(req, res)
 // PUT - edit certain survey
 module.exports.apiPutSurvey = async (req, res) =>
 {     
-    let {_id} = req.params;
+    let {surveyId} = req.params;
     let{ topic, description, active, answered, questions} = req.body;
     // console.log(topic, description, active, answered, questions);
     try
     {
-        let checkData = await Survey.findOne({_id});
+        let checkData = await Survey.findOne({surveyId});
         if(checkData.answered)
         {
             console.log("ERROR - THE SURVEY HAS ANSWERED");
@@ -113,7 +133,7 @@ module.exports.apiPutSurvey = async (req, res) =>
         else
         {
             let updatedData = await Survey.findOneAndUpdate(
-                {_id},
+                {surveyId},
                 { topic, description, active, answered, questions},
                 {
                     new: true,
@@ -123,7 +143,7 @@ module.exports.apiPutSurvey = async (req, res) =>
             );
             return res.send(
                 {
-                    msg: `SUCCESSFUL EDITING SURVEY, ID:${_id}`,
+                    msg: `SUCCESSFUL EDITING SURVEY, ID:${surveyId}`,
                     updatedObj: updatedData
                 }
             );            
@@ -131,7 +151,7 @@ module.exports.apiPutSurvey = async (req, res) =>
     }
     catch(error)
     {
-        console.log(`ERROR UPDATING SURVEY, ID:${_id} `);
+        console.log(`ERROR UPDATING SURVEY, ID:${surveyId} `);
         console.log(error);
         return res.status(500).send(error);
     }

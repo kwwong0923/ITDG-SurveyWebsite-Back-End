@@ -7,9 +7,9 @@ router.get("/api/get-surveys", indexController.apiGetSurveys);
 
 router.post("/api/post-survey", indexController.apiPostSurvey );
 
-router.delete("/api/delete-survey/:_id", indexController.apiDeleteSurvey);
+router.delete("/api/delete-survey/:surveyId", indexController.apiDeleteSurvey);
 
-router.put("/api/edit-survey/:_id", indexController.apiPutSurvey);
+router.put("/api/edit-survey/:surveyId", indexController.apiPutSurvey);
 
 router.get("/api/get-answers-surveyid/:surveyId", indexController.apiGetAnswerBySurveyId);
 

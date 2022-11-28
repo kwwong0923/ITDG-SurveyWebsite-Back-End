@@ -34,21 +34,36 @@ module.exports = (passport) =>
 
     passport.use(strategy);
     
-    passport.serializeUser((user, done) => 
-    {
-        console.log("Serializing User...");
-        done(null, user._id);
-        // grab the mongoDB's id -> store to the session
-    });
+    passport.serializeUser((user, done) => {
+        console.log("----------------------serializeUser--------------------");
+        done(null, user.id)
+    })
 
-    passport.deserializeUser(async (_id, done) => 
-    {
-        console.log("deserializing User...");
-        let foundUser = await User.findOne({_id});
-        done(null, foundUser); 
-        // assign foundUser to req.user
-        // -> req.isAuthenticated = true
-    });
+    passport.deserializeUser((userId, done) => {
+        console.log("----------------------deserializeUser--------------------");
+
+        User.findById(userId)
+        .then((user) => {
+            done(null, user)
+        })
+        .catch(err => done(err))
+    })
+    
+    // passport.serializeUser((user, done) => 
+    // {
+    //     console.log("Serializing User...");
+    //     done(null, user._id);
+    //     // grab the mongoDB's id -> store to the session
+    // });
+
+    // passport.deserializeUser(async (_id, done) => 
+    // {
+    //     console.log("deserializing User...");
+    //     let foundUser = await User.findOne({_id});
+    //     done(null, foundUser); 
+    //     // assign foundUser to req.user
+    //     // -> req.isAuthenticated = true
+    // });
 };
 
 
