@@ -18,11 +18,15 @@ module.exports.loginUser = (req, res) =>
     });
 
     console.log("login OK")
-    return res.status(200).json(
+    const user = new User(
         {
-            user: req.body.user
+            username: req.body.username,
+            email: req.body.email,
+            displayName: req.body.displayName
         }
     )
+    return res.status(200).json(user)
+    
 };
 
 module.exports.signupUser = (req, res) =>
@@ -57,8 +61,14 @@ module.exports.signupUser = (req, res) =>
         console.log(`error from registerUser`);
         console.log(error);
         res.json(error);
-    }
-    
+    }    
+}
+
+module.exports.getUserInfo = (req, res) =>
+{
+    const user = req.body.user;
+    console.log(`Get user info: ${user}`);
+    return res.json(user);
 }
 // --------------old version-----------------
 // // local signup function
