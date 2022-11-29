@@ -17,4 +17,6 @@ router.get("/api/get-answers-userid/:userId", indexController.apiGetAnswerByUser
 
 router.post("/api/post-answer", indexController.apiPostAnswer);
 
+router.get("/api/get-survey/:surveyId", indexController.apiGetSurvey);
+
 module.exports = router;

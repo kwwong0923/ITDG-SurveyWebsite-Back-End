@@ -21,7 +21,16 @@ const SurveySchema = new Schema
             type: Boolean,
             default: false
         },
-        questions: [],
+        questions: [
+            {
+                index: {
+                    type: Number
+                },
+                question: {
+                    type: String
+                }
+            }
+        ],
         surveyId: {
             type:       String,
             default:    '',

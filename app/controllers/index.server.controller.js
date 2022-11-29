@@ -1,6 +1,29 @@
 const Survey = require("../models/survey.server.model");
 const Answer = require("../models/answer.server.model");
 
+// GET - get one survey
+module.exports.apiGetSurvey = async function(req, res)
+{
+    let { surveyId } = req.params;
+    console.log(surveyId);
+    try
+    {
+        let foundData = await Survey.findOne({surveyId});
+        if (foundData)
+        {
+            console.log(`DATA FOUND: ${foundData}`);
+            res.json(foundData);
+        }
+        else
+        {
+            console.log(`DATA NOT FOUND`)
+        }                     
+    }
+    catch(error)
+    {
+        res.json(error);
+    }
+}
 // GET - get all the surveys
 module.exports.apiGetSurveys = async function(req, res)
 {
@@ -30,59 +53,49 @@ module.exports.apiGetSurveys = async function(req, res)
 };
 
 // POST - Create a new survey
-module.exports.apiPostSurvey = async function(req, res)
-{
-    // try
-    // {
-    //     let newSurvey = new Survey(
-    //         {
-    //             topic: req.body.topic,
-    //             description: req.body.description,
-    //             questions: req.body.questions,
-    //         }
-    //     );
-    //     console.log(newSurvey);
-    // }
-    // catch(error)
-    // {
-        
-    // }
-    console.log("apiPostSurvey")
-    let{topic, description, active, answered, questions, surveyId} = req.body;
-    // console.log(surveyId, topic, description, active, answered, questions);
-    try
-    {
-        let newSurvey = new Survey(
-            {
-                topic, description, active, answered, questions, surveyId
-            }
-        );
-        let data = await Survey.findOne({topic});
-        if(data !== null)
-        {
-            console.log("ERROR - SURVEY TOPIC ID IS DUPLICATED");
-            return res.status(500).send("ERROR - SURVEY TOPIC ID IS DUPLICATED");
-        }
-        else
-        {
-            newSurvey.save();
-            console.log(`SUCCESSFUL CREATING SURVEY, NAME:${topic}`);
-            res.send(
-                {
-                    msg: `SUCCESSFUL CREATING SURVEY, NAME:${topic}`,
-                    saveObject: newSurvey
-                }
-            );
-        }
-    }
-    catch(error)
-    {
-        console.log("BACKEND CREATING SURVEY ERROR");
-        console.log(error);
-        return res.status(500).send(error);
+// module.exports.apiPostSurvey = async function(req, res)
+// {
+//     console.log("apiPostSurvey")
+//     let{topic, description, active, answered, questions, surveyId} = req.body;
+//     // console.log(surveyId, topic, description, active, answered, questions);
+//     try
+//     {
+//         let newSurvey = new Survey(
+//             {
+//                 topic, description, active, answered, questions, surveyId
+//             }
+//         );
+//         let data = await Survey.findOne({topic});
+//         if(data !== null)
+//         {
+//             console.log("ERROR - SURVEY TOPIC ID IS DUPLICATED");
+//             return res.status(500).send("ERROR - SURVEY TOPIC ID IS DUPLICATED");
+//         }
+//         else
+//         {
+//             newSurvey.save();
+//             console.log(`SUCCESSFUL CREATING SURVEY, NAME:${newSurvey}`);
+//             res.send(
+//                 {
+//                     msg: `SUCCESSFUL CREATING SURVEY, NAME:${topic}`,
+//                     saveObject: newSurvey
+//                 }
+//             );
+//         }
+//     }
+//     catch(error)
+//     {
+//         console.log("BACKEND CREATING SURVEY ERROR");
+//         console.log(error);
+//         return res.status(500).send(error);
 
-    }   
-};
+//     }   
+// };
+
+module.exports.apiPostSurvey = (req, res) =>
+{
+    console.log("apiPostSurvey");
+}
 
 // DELETE - delete a survey
 module.exports.apiDeleteSurvey = async function(req, res)
