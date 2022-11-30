@@ -9,7 +9,7 @@ module.exports.logoutUser = (req, res) =>
     res.json("logged out");
 }
 
-module.exports.loginUser = (req, res) =>
+module.exports.loginUser = async (req, res) =>
 {
     passport.authenticate("local",
     {
@@ -18,14 +18,12 @@ module.exports.loginUser = (req, res) =>
     });
 
     console.log("login OK")
-    const user = new User(
-        {
-            username: req.body.username,
-            email: req.body.email,
-            displayName: req.body.displayName
-        }
-    )
-    return res.status(200).json(user)
+    console.log(`Username: ${ req.body.username }`)
+
+    const foundUser = await User.findOne({username : req.body.username});
+   
+    console.log(foundUser);
+    return res.status(200).json(foundUser)
     
 };
 
