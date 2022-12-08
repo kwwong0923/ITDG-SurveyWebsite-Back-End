@@ -1,6 +1,7 @@
 const passport = require("passport");
 const User = require("../models/user.server.model");
 // const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const {generatePassword } = require("../../config/passwordAuth.server.config");
 
 module.exports.logoutUser = (req, res) =>
@@ -17,13 +18,16 @@ module.exports.loginUser = async (req, res) =>
         SuccessfullyMessage: "Successfully Authenticated User"
     });
 
-    console.log("login OK")
-    console.log(`Username: ${ req.body.username }`)
-
     const foundUser = await User.findOne({username : req.body.username});
-   
     console.log(foundUser);
-    return res.status(200).json(foundUser)
+    const token = jwt.sign(
+        {
+            username: foundUser.username,
+            userId: foundUser._id
+        },
+        "JWT_SECRET"
+    )
+    return res.status(200).json({token: token})
     
 };
 

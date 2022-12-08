@@ -148,7 +148,7 @@ module.exports.apiPutSurvey = async (req, res) =>
         {
             let updatedData = await Survey.findOneAndUpdate(
                 {surveyId},
-                { topic, description, active, answered, questions},
+                { topic, description, active, answered, questions, surveyId},
                 {
                     new: true,
                     runValidators: true,
@@ -217,25 +217,26 @@ module.exports.apiGetAnswerByUserId = async function(req, res)
 // POST - submit the answers
 module.exports.apiPostAnswer = async (req, res) =>
 {
-    let { surveyId, userId, answers} = req.body;
+    let { surveyId, answers} = req.body;
     try
     {
+        console.log("HEY");
         // check did he/she submit before
-        let foundAnswers = await Answer.find({surveyId});
-        if (foundAnswers)
-        {
-            foundAnswers.forEach((answer) =>
-            {
-                if(answer.userId === userId)
-                {
-                    console.log("ERROR - ONLY ABLE TO SUBMIT ONE TIME");
-                    return res.status(400).send("ERROR - ONLY ABLE TO SUBMIT ONE TIME");
-                }
-            })
-        }
+        // let foundAnswers = await Answer.find({surveyId});
+        // if (foundAnswers)
+        // {
+        //     foundAnswers.forEach((answer) =>
+        //     {
+        //         if(answer.userId === userId)
+        //         {
+        //             console.log("ERROR - ONLY ABLE TO SUBMIT ONE TIME");
+        //             return res.status(400).send("ERROR - ONLY ABLE TO SUBMIT ONE TIME");
+        //         }
+        //     })
+        // }
         newAnswer = new Answer(
             {
-                surveyId, userId, answers
+                surveyId, answers
             }
         );
         newAnswer.save();

@@ -4,12 +4,7 @@ const Schema = mongoose.Schema;
 
 const AnswerSchema = new Schema
 (
-    { 
-        userId:
-        {
-            type: String,
-            trim: true
-        },       
+    {              
         surveyId:
         {
             type: String,
