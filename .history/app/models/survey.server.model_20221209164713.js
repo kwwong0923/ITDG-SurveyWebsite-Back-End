@@ -24,7 +24,7 @@ const SurveySchema = new Schema
         counter: {
             type: Number,
             default: 0
-        },
+        }
         questions: [],
         surveyId: {
             type:       String,

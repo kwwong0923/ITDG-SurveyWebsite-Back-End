@@ -269,7 +269,9 @@ function surveyCounter(surveyId)
     let foundSurvey = Survey.findOne({surveyId})
         .then((result) =>
         {
+            console.log(`result.counter: ${result.counter}`)
             let counter = result.counter + 1;
+            console.log(`counter: ${counter}`)
             let updateCounter = Survey.findOneAndUpdate({surveyId}, {$set: {"counter": counter}})
             .then((result) =>
             {

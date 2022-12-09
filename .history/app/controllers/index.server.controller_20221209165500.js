@@ -263,14 +263,14 @@ function answered (surveyId)
         })    
 }
 
-function surveyCounter(surveyId)
+async function surveyCounter(surveyId)
 {
     let counter;
     let foundSurvey = Survey.findOne({surveyId})
         .then((result) =>
         {
             let counter = result.counter + 1;
-            let updateCounter = Survey.findOneAndUpdate({surveyId}, {$set: {"counter": counter}})
+            Survey.findOneAndUpdated({surveyId}, {$set: {"counter": counter}})
             .then((result) =>
             {
                 console.log(`counter: ${counter}`)

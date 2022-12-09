@@ -233,7 +233,6 @@ module.exports.apiPostAnswer = async (req, res, next) =>
         );
         newAnswer.save();
         answered(surveyId);
-        surveyCounter(surveyId);
         console.log(`SUCCESSFUL CREATING ANSWER`);
         res.send(
             {
@@ -269,15 +268,6 @@ function surveyCounter(surveyId)
     let foundSurvey = Survey.findOne({surveyId})
         .then((result) =>
         {
-            let counter = result.counter + 1;
-            let updateCounter = Survey.findOneAndUpdate({surveyId}, {$set: {"counter": counter}})
-            .then((result) =>
-            {
-                console.log(`counter: ${counter}`)
-            })
-        })
-        .catch(err)
-        {
-            console.log(err);
-        }
+            
+        } 
 }
