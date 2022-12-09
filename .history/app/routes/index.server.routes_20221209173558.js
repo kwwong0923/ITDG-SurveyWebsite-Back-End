@@ -3,6 +3,7 @@ const router = express.Router();
 
 const indexController = require("../controllers/index.server.controller");
 
+ro
 router.get("/api/get-surveys", indexController.apiGetSurveys);
 
 router.post("/api/post-survey", indexController.apiPostSurvey );
@@ -18,11 +19,5 @@ router.get("/api/get-answers-userid/:userId", indexController.apiGetAnswerByUser
 router.post("/api/post-answer", indexController.apiPostAnswer);
 
 router.get("/api/get-survey/:surveyId", indexController.apiGetSurvey);
-
-router.get("", (req, res) =>
-{
-    res.send("BACK END!");
-})
-
 
 module.exports = router;

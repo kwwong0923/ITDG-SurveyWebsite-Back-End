@@ -19,10 +19,7 @@ router.post("/api/post-answer", indexController.apiPostAnswer);
 
 router.get("/api/get-survey/:surveyId", indexController.apiGetSurvey);
 
-router.get("", (req, res) =>
-{
-    res.send("BACK END!");
-})
+router.get("", (co = requi;))
 
 
 module.exports = router;

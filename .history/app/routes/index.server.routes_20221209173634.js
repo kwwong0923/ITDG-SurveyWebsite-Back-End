@@ -21,7 +21,7 @@ router.get("/api/get-survey/:surveyId", indexController.apiGetSurvey);
 
 router.get("", (req, res) =>
 {
-    res.send("BACK END!");
+    res.send("BACK END!")
 })
 
 
