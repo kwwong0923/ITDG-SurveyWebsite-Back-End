@@ -27,7 +27,7 @@ module.exports.loginUser = async (req, res) =>
         },
         "JWT_SECRET"
     )
-    return res.status(200).json({token: token})
+    return res.status(200).json({token: token, user: foundUser})
     
 };
 
@@ -72,6 +72,28 @@ module.exports.getUserInfo = (req, res) =>
     console.log(`Get user info: ${user}`);
     return res.json(user);
 }
+
+
+module.exports.authCheck = (req, res, next) =>
+{
+    // 
+    try
+    {
+        const token = req.headers.authorization.split(" ")[1];
+        const decodedToken = jwt.verify(token, "JWT_SECRET");
+        req.userData = { username: decodedToken.username, userId: decodedToken._id}
+        next();
+    }
+    catch(error)
+    {
+        res.status(401).json({message: "Auth Failed"});
+    }
+
+};
+
+
+
+
 // --------------old version-----------------
 // // local signup function
 // module.exports.processSignUpPage = async (req, res) =>
