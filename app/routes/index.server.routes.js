@@ -11,7 +11,7 @@ router.delete("/api/delete-survey/:surveyId", indexController.apiDeleteSurvey);
 
 router.put("/api/edit-survey/:surveyId", indexController.apiPutSurvey);
 
-router.get("/api/get-answers-surveyid/:surveyId", indexController.apiGetAnswerBySurveyId);
+router.get("/api/get-answer/:surveyId", indexController.apiGetAnswerBySurveyId);
 
 router.get("/api/get-answers-userid/:userId", indexController.apiGetAnswerByUserId);
 

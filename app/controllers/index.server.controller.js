@@ -176,9 +176,11 @@ module.exports.apiPutSurvey = async (req, res) =>
 module.exports.apiGetAnswerBySurveyId = async function(req, res)
 {
     let {surveyId} = req.params; 
+    console.log("apiGetAnswerBySurveyId-------------------");
+    console.log(surveyId);
     try
     {
-        let foundAnswers = await Answer.find({surveyId});
+        let foundAnswers = await Answer.find({surveyId: surveyId});
         if (foundAnswers)
         {
             console.log("DATA FOUND!");
@@ -220,7 +222,6 @@ module.exports.apiPostAnswer = async (req, res) =>
     let { surveyId, answers} = req.body;
     try
     {
-        console.log("HEY");
         // check did he/she submit before
         // let foundAnswers = await Answer.find({surveyId});
         // if (foundAnswers)
