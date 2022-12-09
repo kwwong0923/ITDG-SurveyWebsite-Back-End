@@ -142,11 +142,7 @@ module.exports.apiPutSurvey = async (req, res) =>
         if(checkData.answered)
         {
             console.log("ERROR - THE SURVEY HAS ANSWERED");
-            return res.status(500).json(
-                {
-                    msg: "ERROR - THE SURVEY HAS ANSWERED",
-                }
-            )
+            return res.status(500).send("ERROR - THE SURVEY HAS ANSWERED");
         }
         else
         {
@@ -221,7 +217,7 @@ module.exports.apiGetAnswerByUserId = async function(req, res)
 }
 
 // POST - submit the answers
-module.exports.apiPostAnswer = async (req, res, next) =>
+module.exports.apiPostAnswer = async (req, res) =>
 {
     let { surveyId, answers} = req.body;
     try
@@ -232,7 +228,6 @@ module.exports.apiPostAnswer = async (req, res, next) =>
             }
         );
         newAnswer.save();
-        answered(surveyId);
         console.log(`SUCCESSFUL CREATING ANSWER`);
         res.send(
             {
@@ -240,7 +235,6 @@ module.exports.apiPostAnswer = async (req, res, next) =>
                 saveObject: newAnswer
             }
         );
-        next();
     }
     catch(error)
     {
@@ -249,15 +243,4 @@ module.exports.apiPostAnswer = async (req, res, next) =>
     }
 }
 
-function answered (surveyId)
-{
-    let updateAnswered = Survey.findOneAndUpdate({surveyId}, {$set: {"answered" : true}})
-        .then((result) => 
-        {
-            console.log("Updated survey answered");
-        })
-        .catch((err) =>
-        {
-            console.log(err);
-        })    
-}
+function answered

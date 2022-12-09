@@ -144,7 +144,7 @@ module.exports.apiPutSurvey = async (req, res) =>
             console.log("ERROR - THE SURVEY HAS ANSWERED");
             return res.status(500).json(
                 {
-                    msg: "ERROR - THE SURVEY HAS ANSWERED",
+                    msg: ""
                 }
             )
         }
